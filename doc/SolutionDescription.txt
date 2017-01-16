@@ -1,0 +1,30 @@
+Assumptions:
+
+The solution is implemented as ConsoleApplication and the report is presented in console window.
+By default street1.txt file from execution directory is processed (has to be copied there).
+It is possible to specify file name as a parameter, to display a result for another file.
+
+
+Solution:
+
+.Net Framework 4.5.2 and C# 6.0 (requires VisualStudio 2015)
+NuGet packages will be downloaded on build
+
+
+Projects:
+
+Valtech.PaperRound - 	console application, responsible for running application and setting up IoC container. Contains ConsoleReportPresenter which is implementation of IReportPresenter
+			displaying report in a console window.
+
+
+
+Valtech.PaperRound.Core - class library where most of the logic is located. Designed to be easily extensible. It's possible to provide different implementation of IReportPresenter
+			to be able to present report in a different way (eg. by email or output file). It's also possible to provide another IDeliveryStrategy, other than these
+			in acceptance criteria ("North first" and "In Turn from West to East"). There is also IReportProvider interface allowing to extend report with another data part 
+			other than street specification data (Story1) and delivery strategy data (Story2). Street specification validation is not extensible as I assume there are general
+			rules regarding house numbers that are not likely to change. This logic is a part of StreetSpecification class, following DDD principles and avoiding AnimicDomainModel
+			(http://www.martinfowler.com/bliki/AnemicDomainModel.html - Martin Fowler)
+
+
+
+Valtech.PaperRound.Core.Test - unit tests for Core project. Using Nunit, Moq and AutoFixture
